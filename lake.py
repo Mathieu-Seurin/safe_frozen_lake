@@ -115,6 +115,12 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
         self.max_steps = 100
         self.current_step = 0
 
+        if map_name=="4x4":
+            self.shortest_path_length = 6
+        elif map_name=="8x8":
+            self.shortest_path_length = 14
+        else:
+            raise NotImplementedError("No other map are available")
 
         nA = 4
         nS = nrow * ncol
