@@ -102,7 +102,7 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
 
     metadata = {'render.modes': ['human', 'ansi']}
 
-    def __init__(self, desc=None, map_name="4x4", is_slippery=True, reward_when_falling=0):
+    def __init__(self, desc=None, map_name="4x4", is_slippery=True, reward_when_falling=0, reset_when_falling=False):
         if desc is None and map_name is None:
             desc = generate_random_map()
         elif desc is None:
@@ -112,11 +112,16 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
         self.reward_range = (0, 1)
 
         self.reward_when_falling = reward_when_falling
+        self.reset_when_falling = reset_when_falling # When you fall in a hole, respawn the agent at the beginning
         self.max_steps = 100
         self.current_step = 0
 
         if map_name=="4x4":
-            self.shortest_path_length = 6
+            if is_slippery:
+                self.shortest_path_length = 19
+            else:
+                self.shortest_path_length = 6
+
         elif map_name=="8x8":
             self.shortest_path_length = 14
         else:
@@ -201,7 +206,7 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
             #print("Don't do that, little asshole")
             self.s = current_s
             obs = self.s
-            done = False
+            done = self.reset_when_falling
             reward = self.reward_when_falling
             gave_feedback = True
 
@@ -223,4 +228,3 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
         new_obs['state'] = state
         new_obs['gave_feedback'] = False
         return new_obs
-
