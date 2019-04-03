@@ -4,23 +4,30 @@ import numpy as np
 
 class OptimalAgent(object):
 
-    def __init__(self, env_size, n_action, gamma, lr, expected_exploration_steps):
+    def __init__(self):
 
-        self.state_to_best_action = {
-            0 : 1,
-            4 : 1,
-            8 : 2,
-            9 : 2,
-            10 : 1,
-            13 : 2,
-            14 : 2,
-            1 : 0
-        }
+        # self.state_to_best_action = {
+        #     0 : 1,
+        #     9 : 2,
+        #     10 : 1,
+        #     13 : 2,
+        #     14 : 2,
+        #     1 : 0
+        # }
+
+        self.state_to_best_action = [
+            0, 3, 3, 3, 0,-1, 0,-1, 3, 1, 0,  -1, -1, 2, 1
+        #   0  1  2  3  4  5  6  7  8  9  10  11  12 13 14
+        ]
+
+        self.current_eps = 0
 
     def choose_action_eps_greedy(self, s):
+        s = s['state']
         return self.state_to_best_action[s]
 
     def choose_action_greedy(self, s):
+        s = s['state']
         return self.state_to_best_action[s]
 
     def optimize(self, state, a, next_state, r):

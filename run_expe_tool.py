@@ -58,7 +58,6 @@ def run_expe(create_algo, game, n_episodes_train, n_tests, percentage_to_success
 
     for ep in range(n_episodes_train):
 
-        assert algo.current_eps >= algo.minimum_epsilon, "Failed to change epsilon"
         state = game.reset()
         done = False
 
@@ -78,7 +77,7 @@ def run_expe(create_algo, game, n_episodes_train, n_tests, percentage_to_success
             feedback_train_this_ep += next_state['gave_feedback']
 
             # if next_state['gave_feedback']:
-            #     print("fais pas ça petit con")
+            #     print(next_state['state'], ep, num_steps_this_ep, "fais pas ça petit con")
 
         total_training_steps += num_steps_this_ep
         if reward == 1:

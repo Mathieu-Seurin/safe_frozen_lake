@@ -203,7 +203,6 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
         self.current_step += 1
 
         if done and reward == 0: # aka fell in a hole, stopped the agent from doing it
-            #print("Don't do that, little asshole")
             self.s = current_s
             obs = self.s
             done = self.reset_when_falling
@@ -216,7 +215,6 @@ class FrozenLakeEnvStop(discrete.DiscreteEnv):
         new_obs = dict()
         new_obs['state'] = obs
         new_obs['gave_feedback'] = gave_feedback
-
 
         return new_obs, reward, done, info
 
